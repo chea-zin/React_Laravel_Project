@@ -7,7 +7,7 @@ import {
   ShoppingBagIcon,
   UsersIcon,
 } from "@heroicons/react/24/outline";
-import { logout } from "../services/auth";
+import { adminLogout } from "../services/auth";
 import { IoIosHome } from "react-icons/io";
 
 export default function Sidebar({ onClose }) {
@@ -69,7 +69,7 @@ export default function Sidebar({ onClose }) {
       {/* Logout Button */}
       <button
         onClick={() => {
-          logout();
+          adminLogout();
           window.location.href = "/login";
         }}
         className="flex items-center bg-red-50 justify-center gap-2 mx-4 my-4 p-3 text-red-600 hover:bg-red-100 rounded-lg transition"

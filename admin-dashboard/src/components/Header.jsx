@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
 import { ChevronDownIcon, UserCircleIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
-import { logout, getCurrentUser } from '../services/auth';
+import { adminLogout, getCurrentAdmin } from '../services/auth';
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
-    const [user, setUser] = useState(null);
+    const [admin, setAdmin] = useState(null);
     const [isLoading, setIsLoading] = useState(true); // Add loading state
 
     useEffect(() => {
-        const fetchUser = async () => {
+        const fetchAdmin = async () => {
             setIsLoading(true); // Set loading to true at the start
 
-            const userData = await getCurrentUser();
-            setUser(userData);
+            const adminData = await getCurrentAdmin();
+            setAdmin(adminData);
             setIsLoading(false); // Set loading to false after data is fetched
         };
 
-        fetchUser();
+        fetchAdmin();
     }, []);
 
     return (
@@ -31,11 +31,11 @@ export default function Header() {
                     <div className="text-left">
                         {isLoading ? (  // Show loading indicator
                             <p className="text-xs sm:text-sm">Loading...</p> // Adjusted Font Size
-                        ) : user ? (  // Only render user details if user is not null
+                        ) : admin ? (  // Only render admin details if admin is not null
                             <>
-                              <p className="text-xs sm:hidden font-medium text-gray-700">{user.name}</p>  {/* Name only on mobile */}
-                                <p className="hidden sm:block text-xs sm:text-sm font-medium text-gray-700">{user.name}</p> {/* Name on larger screens */}
-                                <p className="hidden text-[0.7rem] sm:block sm:text-xs text-gray-500">{user.email}</p>  {/* Email on larger screens */}
+                              <p className="text-xs sm:hidden font-medium text-gray-700">{admin.name}</p>  {/* Name only on mobile */}
+                                <p className="hidden sm:block text-xs sm:text-sm font-medium text-gray-700">{admin.name}</p> {/* Name on larger screens */}
+                                <p className="hidden text-[0.7rem] sm:block sm:text-xs text-gray-500">{admin.email}</p>  {/* Email on larger screens */}
                             </>
                         ) : (
                             <p className="text-xs sm:text-sm font-medium text-gray-700">Not logged in</p> // Displayed when user is null
@@ -51,10 +51,10 @@ export default function Header() {
                     >
                         <div className="px-4 py-3 border-b">
                             <p className="text-sm text-gray-900">Signed in as</p>
-                            <p className="text-sm font-medium text-gray-700 truncate">{user?.email}</p> {/* Use optional chaining */}
+                            <p className="text-sm font-medium text-gray-700 truncate">{admin?.email}</p> {/* Use optional chaining */}
                         </div>
                         <button
-                            onClick={logout}
+                            onClick={adminLogout}
                             className="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
                         >
                             <ArrowRightOnRectangleIcon className="h-5 w-5 mr-2 text-gray-600" />
