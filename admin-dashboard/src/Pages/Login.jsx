@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../services/auth';
+import { adminLogin } from '../services/auth';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -12,19 +12,19 @@ export default function Login() {
 const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await login({ email, password });  // Get the full response
+        const response = await adminLogin({ email, password });  // Get the full response
         console.log("Login API Response:", response); // INSPECT THIS IN THE CONSOLE
 
-        const { access_token, user } = response;
+        const { access_token, admin } = response;
 
-        console.log("User object after login:", user);  // INSPECT THIS
+        console.log("User object after login:", admin);  // INSPECT THIS
 
         localStorage.setItem('authToken', access_token);
 
-        if (user) {
-            localStorage.setItem('user', JSON.stringify(user));
+        if (admin) {
+            localStorage.setItem('admin', JSON.stringify(admin));
         } else {
-            console.warn('User data is null or undefined. Not saving to localStorage.');
+            console.warn('Admin data is null or undefined. Not saving to localStorage.');
         }
 
         navigate('/');
